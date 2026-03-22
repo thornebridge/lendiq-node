@@ -2,7 +2,54 @@
  * Document and analysis response types.
  */
 
-import type { PaginationMeta } from "./common";
+import type { HealthFactor, PaginationMeta, ValidationDiscrepancy } from "./common";
+
+/** Pre-screen results from regex extraction (no LLM). */
+export interface PrescreenSummary {
+  bank_name: string | null;
+  account_last4: string | null;
+  opening_balance: number | null;
+  closing_balance: number | null;
+  start_date: string | null;
+  end_date: string | null;
+  est_transaction_count: number | null;
+  text_quality: number | null;
+  viable: boolean | null;
+  rejection_reasons: string[] | null;
+  confidence: number | null;
+  completed_at: string | null;
+  [key: string]: unknown;
+}
+
+/** Confidence for a single extracted field. */
+export interface FieldConfidence {
+  field_name: string;
+  value: string | null;
+  confidence: string;
+  confidence_score: number;
+  source: string | null;
+  discrepancy: boolean;
+  [key: string]: unknown;
+}
+
+/** Complete extraction confidence breakdown. */
+export interface ExtractionConfidenceDetail {
+  overall_confidence: number;
+  overall_tier: string;
+  fields: FieldConfidence[];
+  high_confidence_count: number;
+  low_confidence_count: number;
+  fields_requiring_review: string[];
+  [key: string]: unknown;
+}
+
+/** Document integrity / tampering detection summary. */
+export interface DocumentIntegrity {
+  tampering_risk_level: string;
+  tampering_flags: string[];
+  font_families_detected: number | null;
+  [key: string]: unknown;
+}
 
 /** Document summary in list responses. */
 export interface DocumentSummary {
@@ -48,8 +95,8 @@ export interface AnalysisSummary {
   true_average_monthly_deposits: number | null;
   non_operating_pct: number | null;
   validation_is_reliable: boolean | null;
-  validation_discrepancies: unknown[] | null;
-  health_factors_json: Record<string, unknown> | null;
+  validation_discrepancies: ValidationDiscrepancy[] | null;
+  health_factors_json: Record<string, HealthFactor> | null;
   deposit_mix: Record<string, unknown> | null;
   [key: string]: unknown;
 }
@@ -86,9 +133,9 @@ export interface DocumentDetail {
   pdf_url: string | null;
   tax_return_analysis: Record<string, unknown> | null;
   pnl_analysis: Record<string, unknown> | null;
-  prescreen: Record<string, unknown> | null;
-  integrity: Record<string, unknown> | null;
-  extraction_confidence_detail: Record<string, unknown> | null;
+  prescreen: PrescreenSummary | null;
+  integrity: DocumentIntegrity | null;
+  extraction_confidence_detail: ExtractionConfidenceDetail | null;
   [key: string]: unknown;
 }
 

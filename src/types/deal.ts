@@ -2,7 +2,7 @@
  * Deal response types.
  */
 
-import type { PaginationMeta } from "./common";
+import type { HealthFactor, PaginationMeta } from "./common";
 
 // ── Summary sub-schemas ─────────────────────────────────────────────────────
 
@@ -83,7 +83,7 @@ export interface LargeDeposit {
 export interface HealthSummary {
   health_score: number | null;
   health_grade: string | null;
-  factors: Record<string, unknown> | null;
+  factors: Record<string, HealthFactor> | null;
   [key: string]: unknown;
 }
 
@@ -103,6 +103,11 @@ export interface RecommendationSummary {
   funding_likelihood: string | null;
   risk_factors: string[] | null;
   strengths: string[] | null;
+  dscr: number | null;
+  cash_flow_coverage_ratio: number | null;
+  hypothetical_cfcr: number | null;
+  hypothetical_dscr: number | null;
+  stress_test_passed: boolean | null;
   [key: string]: unknown;
 }
 

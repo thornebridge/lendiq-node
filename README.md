@@ -66,6 +66,40 @@ const detail = await client.deals.get(42);
 
 All response interfaces include `[key: string]: unknown` for forward compatibility. New API fields will be accepted without breaking your code.
 
+## Document & Deal Detail
+
+Access typed sub-objects for prescreen, integrity, validation, and health factors:
+
+```typescript
+// Document detail with typed prescreen and integrity
+const doc = await client.documents.get(15);
+
+// Prescreen (regex-based extraction, no LLM cost)
+if (doc.prescreen) {
+  console.log(doc.prescreen.bank_name, doc.prescreen.viable);
+  console.log(`Quality: ${doc.prescreen.text_quality}, Confidence: ${doc.prescreen.confidence}`);
+}
+
+// Integrity (tampering detection)
+if (doc.integrity) {
+  console.log(doc.integrity.tampering_risk_level); // "clean" | "low" | "medium" | "high"
+  console.log(doc.integrity.tampering_flags);
+}
+
+// Health sub-factors (up to 12)
+const detail = await client.deals.get(42);
+if (detail.health?.factors) {
+  for (const [name, factor] of Object.entries(detail.health.factors)) {
+    console.log(`  ${name}: ${factor.score}/${factor.max} (weight ${factor.weight})`);
+  }
+}
+
+// MCA credit score
+if (detail.mca) {
+  console.log(`MCA Score: ${detail.mca.mca_credit_score} (${detail.mca.credit_grade})`);
+}
+```
+
 ## Auto-Pagination
 
 Iterate over all items across pages automatically with `for await...of`:

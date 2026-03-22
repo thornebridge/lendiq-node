@@ -19,7 +19,13 @@ export type {
 export type { AuthLoginResponse } from "./auth";
 
 // Common
-export type { ActionResponse, ErrorDetail, PaginationMeta } from "./common";
+export type {
+  ActionResponse,
+  ErrorDetail,
+  HealthFactor,
+  PaginationMeta,
+  ValidationDiscrepancy,
+} from "./common";
 
 // Collaboration
 export type {
@@ -76,10 +82,14 @@ export type {
   BulkUploadItemResponse,
   BulkUploadResponse,
   DocumentDetail,
+  DocumentIntegrity,
   DocumentListResponse,
   DocumentStatusResponse,
   DocumentSummary,
   DocumentUploadResponse,
+  ExtractionConfidenceDetail,
+  FieldConfidence,
+  PrescreenSummary,
 } from "./document";
 
 // Event

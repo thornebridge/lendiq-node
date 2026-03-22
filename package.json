@@ -1,6 +1,6 @@
 {
   "name": "banklyze",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Official TypeScript SDK for the Banklyze API — AI-powered MCA underwriting platform",
   "license": "MIT",
   "type": "module",

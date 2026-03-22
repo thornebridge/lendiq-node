@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-03-21
+
+### Added
+
+- **PrescreenSummary** — typed interface for `DocumentDetail.prescreen` (was `Record<string, unknown>`)
+- **DocumentIntegrity** — typed interface for `DocumentDetail.integrity` (was `Record<string, unknown>`)
+- **ExtractionConfidenceDetail** + **FieldConfidence** — typed interface for `DocumentDetail.extraction_confidence_detail`
+- **ValidationDiscrepancy** — typed interface for `AnalysisSummary.validation_discrepancies` (was `unknown[]`)
+- **HealthFactor** — typed interface for `HealthSummary.factors` and `AnalysisSummary.health_factors_json` (was `Record<string, unknown>`)
+- **RecommendationSummary** — added `dscr`, `cash_flow_coverage_ratio`, `hypothetical_cfcr`, `hypothetical_dscr`, `stress_test_passed` fields
+
+### Deprecated
+
+- `AdminResource.getConstraints()` and `updateConstraints()` — use `client.rulesets` instead
+
 ## [1.1.0] - 2026-03-20
 
 ### Added
