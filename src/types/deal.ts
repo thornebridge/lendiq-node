@@ -176,6 +176,8 @@ export interface McaSummary {
   avg_daily_deposit: number | null;
   deposit_days_pct: number | null;
   mca_credit_score: number | null;
+  fundability_score: number | null;
+  fundability_grade: string | null;
   credit_grade: string | null;
   [key: string]: unknown;
 }
@@ -219,6 +221,8 @@ export interface DealSummary {
   document_count: number;
   health_score: number | null;
   health_grade: string | null;
+  fundability_score: number | null;
+  fundability_grade: string | null;
   avg_monthly_deposits: number | null;
   avg_daily_balance: number | null;
   funding_amount_requested: number | null;

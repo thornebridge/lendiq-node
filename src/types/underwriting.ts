@@ -44,6 +44,8 @@ export interface Recommendation {
   hypothetical_cfcr: number | null;
   hypothetical_dscr: number | null;
   mca_credit_score: number | null;
+  fundability_score: number | null;
+  fundability_grade: string | null;
   ruleset_id: number | null;
   ruleset_name: string | null;
   created_at: string | null;
