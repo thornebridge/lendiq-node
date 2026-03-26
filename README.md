@@ -31,7 +31,7 @@ Turn months of manual underwriting into a single API call.
 
 <br />
 
-[Get API Key](https://banklyze.com) &nbsp;&middot;&nbsp; [Documentation](https://docs.banklyze.com) &nbsp;&middot;&nbsp; [API Reference](https://docs.banklyze.com/api) &nbsp;&middot;&nbsp; [Discord](https://discord.gg/banklyze)
+[Get API Key](https://banklyze.com) &nbsp;&middot;&nbsp; [Documentation](https://docs.banklyze.com) &nbsp;&middot;&nbsp; [API Reference](https://docs.banklyze.com/api)
 
 <br />
 </div>
@@ -84,6 +84,26 @@ That PDF just went through OCR extraction, LLM parsing, transaction screening, t
 </td>
 </tr>
 </table>
+
+<br />
+
+## Banklyze vs. the alternatives
+
+| | **Banklyze** | Ocrolus | LendAPI | Plaid (Asset Reports) | DIY (in-house) |
+|---|:---:|:---:|:---:|:---:|:---:|
+| Upload PDF &rarr; full underwriting decision | **Yes** | No | Partial | No | Build it yourself |
+| Bank statement + tax return + P&L support | **All three** | Statements only | Statements only | No PDFs | Depends on scope |
+| LLM-powered extraction | **Yes** | Template OCR | Template OCR | N/A | Build it yourself |
+| Tamper / fraud detection | **Built in** | Add-on | No | No | Build it yourself |
+| Health scoring (12 sub-factors) | **Built in** | No | Basic | No | Build it yourself |
+| Underwriting recommendation engine | **Built in** | No | Basic | No | Build it yourself |
+| Custom rulesets with version history | **Yes** | No | No | No | Build it yourself |
+| MCA position detection | **Yes** | No | No | No | Build it yourself |
+| Real-time SSE streaming | **Yes** | Polling | Polling | Polling | Build it yourself |
+| Typed SDKs (Python + TypeScript) | **Both** | Python only | None | Multiple | N/A |
+| Pricing | **Per document** | Per document | Per document | Per connection | Engineering time |
+
+We don't just extract data from bank statements. We **understand** them — and give you a decision you can act on.
 
 <br />
 
