@@ -4,7 +4,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://banklyze.com/icons/banklyze-mark-white.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://banklyze.com/icons/Banklyze-Logo.svg">
-  <img alt="Banklyze" src="https://banklyze.com/icons/Banklyze-Logo.svg" width="220">
+  <img alt="Banklyze" src="https://banklyze.com/icons/Banklyze-Logo.svg" width="44">
 </picture>
 
 <br />
