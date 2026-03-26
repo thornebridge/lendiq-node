@@ -1,5 +1,5 @@
 {
-  "name": "banklyze",
+  "name": "@banklyze/sdk",
   "version": "1.3.0",
   "description": "Official TypeScript SDK for the Banklyze API — AI-powered MCA underwriting platform",
   "license": "MIT",
@@ -38,11 +38,10 @@
   "homepage": "https://docs.banklyze.com/sdk/typescript",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thornebridge/banklyze",
-    "directory": "sdk-ts"
+    "url": "https://github.com/thornebridge/banklyze-node"
   },
   "bugs": {
-    "url": "https://github.com/thornebridge/banklyze/issues"
+    "url": "https://github.com/thornebridge/banklyze-node/issues"
   },
   "keywords": [
     "banklyze",
