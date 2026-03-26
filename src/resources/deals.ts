@@ -12,6 +12,7 @@ import type {
   DealNotesListResponse,
   DealNote,
   DailyStatsResponse,
+  DealAnalyticsResponse,
 } from "../types/deal.js";
 import type { ComparativeEvaluationResponse } from "../types/ruleset.js";
 import type { Recommendation } from "../types/underwriting.js";
@@ -76,8 +77,8 @@ export class DealsResource {
     });
   }
 
-  listAll(filters?: Record<string, unknown>): PageIterator {
-    return new PageIterator(this._client, "/v1/deals", {
+  listAll(filters?: Record<string, unknown>): PageIterator<DealSummary> {
+    return new PageIterator<DealSummary>(this._client, "/v1/deals", {
       params: filters,
     });
   }
@@ -231,8 +232,8 @@ export class DealsResource {
     return this._request<DealStats>("GET", "/v1/deals/stats");
   }
 
-  async analytics(): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>("GET", "/v1/deals/analytics");
+  async analytics(): Promise<DealAnalyticsResponse> {
+    return this._request<DealAnalyticsResponse>("GET", "/v1/deals/analytics");
   }
 
   async dailyStats(options?: { days?: number }): Promise<DailyStatsResponse> {

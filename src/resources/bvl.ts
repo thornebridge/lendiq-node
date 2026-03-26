@@ -9,7 +9,13 @@ import type {
   BVLRunListResponse,
   BVLStats,
   CallQueueResponse,
+  SAMEntityListResponse,
+  SAMStatsResponse,
 } from "../types/bvl.js";
+import type {
+  SAMFetchRun,
+  SAMFetchRunListResponse,
+} from "../types/sam-profiles.js";
 
 export class BVLResource {
   _client: Banklyze;
@@ -87,5 +93,41 @@ export class BVLResource {
     return this._request<BVLResult>("POST", `/v1/bvl/${dealId}/validate`, {
       json: options,
     });
+  }
+
+  // ── SAM (via BVL) ───────────────────────────────────────────────────────
+
+  async samCreateRun(options?: Record<string, unknown>): Promise<SAMFetchRun> {
+    return this._request<SAMFetchRun>("POST", "/v1/bvl/sam/runs", { json: options });
+  }
+
+  async samListRuns(options?: {
+    page?: number;
+    per_page?: number;
+  }): Promise<SAMFetchRunListResponse> {
+    return this._request<SAMFetchRunListResponse>("GET", "/v1/bvl/sam/runs", {
+      params: options as Record<string, unknown>,
+    });
+  }
+
+  async samGetRun(runId: number): Promise<SAMFetchRun> {
+    return this._request<SAMFetchRun>("GET", `/v1/bvl/sam/runs/${runId}`);
+  }
+
+  async samCancelRun(runId: number): Promise<SAMFetchRun> {
+    return this._request<SAMFetchRun>("POST", `/v1/bvl/sam/runs/${runId}/cancel`);
+  }
+
+  async samEntities(options?: {
+    page?: number;
+    per_page?: number;
+  }): Promise<SAMEntityListResponse> {
+    return this._request<SAMEntityListResponse>("GET", "/v1/bvl/sam/entities", {
+      params: options as Record<string, unknown>,
+    });
+  }
+
+  async samStats(): Promise<SAMStatsResponse> {
+    return this._request<SAMStatsResponse>("GET", "/v1/bvl/sam/stats");
   }
 }

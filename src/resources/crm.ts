@@ -3,6 +3,7 @@
  */
 
 import type { Banklyze, RequestOptions } from "../client.js";
+import type { CRMConfigResponse, TestConnectionResponse, FieldMappingResponse, SyncTriggerResponse, SyncLogResponse } from "../types/crm.js";
 
 export class CrmResource {
   _client: Banklyze;
@@ -20,8 +21,8 @@ export class CrmResource {
   }
 
   /** Get CRM configuration for a provider. */
-  async getConfig(provider: string): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async getConfig(provider: string): Promise<CRMConfigResponse> {
+    return this._request<CRMConfigResponse>(
       "GET",
       `/v1/crm/config/${provider}`,
     );
@@ -31,8 +32,8 @@ export class CrmResource {
   async updateConfig(
     provider: string,
     options: Record<string, unknown>,
-  ): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  ): Promise<CRMConfigResponse> {
+    return this._request<CRMConfigResponse>(
       "PUT",
       `/v1/crm/config/${provider}`,
       { json: options },
@@ -40,24 +41,24 @@ export class CrmResource {
   }
 
   /** Remove CRM configuration for a provider. */
-  async deleteConfig(provider: string): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async deleteConfig(provider: string): Promise<CRMConfigResponse> {
+    return this._request<CRMConfigResponse>(
       "DELETE",
       `/v1/crm/config/${provider}`,
     );
   }
 
   /** Test CRM connection for a provider. */
-  async test(provider: string): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async test(provider: string): Promise<TestConnectionResponse> {
+    return this._request<TestConnectionResponse>(
       "POST",
       `/v1/crm/config/${provider}/test`,
     );
   }
 
   /** Get field mapping for a provider. */
-  async getFieldMapping(provider: string): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async getFieldMapping(provider: string): Promise<FieldMappingResponse> {
+    return this._request<FieldMappingResponse>(
       "GET",
       `/v1/crm/field-mapping/${provider}`,
     );
@@ -67,8 +68,8 @@ export class CrmResource {
   async updateFieldMapping(
     provider: string,
     options: Record<string, unknown>,
-  ): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  ): Promise<FieldMappingResponse> {
+    return this._request<FieldMappingResponse>(
       "PUT",
       `/v1/crm/field-mapping/${provider}`,
       { json: options },
@@ -76,8 +77,8 @@ export class CrmResource {
   }
 
   /** Trigger a manual CRM sync for a deal. */
-  async sync(options: { deal_id: number }): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async sync(options: { deal_id: number }): Promise<SyncTriggerResponse> {
+    return this._request<SyncTriggerResponse>(
       "POST",
       "/v1/crm/sync",
       { json: options as Record<string, unknown> },
@@ -89,8 +90,8 @@ export class CrmResource {
     page?: number;
     per_page?: number;
     deal_id?: number;
-  }): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>("GET", "/v1/crm/sync-log", {
+  }): Promise<SyncLogResponse> {
+    return this._request<SyncLogResponse>("GET", "/v1/crm/sync-log", {
       params: options as Record<string, unknown>,
     });
   }

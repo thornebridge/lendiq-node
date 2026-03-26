@@ -66,3 +66,39 @@ export interface UsageSummaryResponse {
   error_counts: Record<string, number>;
   [key: string]: unknown;
 }
+
+export interface HealthResponse {
+  db_connected: boolean;
+  pipeline_success_rate_24h: number;
+  pipelines_last_24h: number;
+  queue_depth: number;
+  [key: string]: unknown;
+}
+
+export interface UsageDailyEntry {
+  day: string;
+  events: number;
+  tokens: number;
+  cost: number;
+  [key: string]: unknown;
+}
+
+export interface UsageDailyResponse {
+  days: UsageDailyEntry[];
+  [key: string]: unknown;
+}
+
+export interface UsageModelsEntry {
+  model_name: string;
+  count: number;
+  input_tokens: number;
+  output_tokens: number;
+  cost: number;
+  avg_duration_ms: number;
+  [key: string]: unknown;
+}
+
+export interface UsageModelsResponse {
+  models: UsageModelsEntry[];
+  [key: string]: unknown;
+}

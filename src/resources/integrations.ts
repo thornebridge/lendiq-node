@@ -6,6 +6,7 @@ import type { Banklyze, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type {
   IntegrationHealthResponse,
+  IntegrationTestResponse,
   Integration,
 } from "../types/integration.js";
 
@@ -57,8 +58,8 @@ export class IntegrationsResource {
     );
   }
 
-  async test(integrationType: string): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async test(integrationType: string): Promise<IntegrationTestResponse> {
+    return this._request<IntegrationTestResponse>(
       "POST",
       `/v1/integrations/${integrationType}/test`,
     );

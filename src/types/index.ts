@@ -9,6 +9,11 @@
 export type {
   ErrorLogEntry,
   ErrorLogListResponse,
+  HealthResponse,
+  UsageDailyEntry,
+  UsageDailyResponse,
+  UsageModelsEntry,
+  UsageModelsResponse,
   UsageSummaryByEvent,
   UsageSummaryByModel,
   UsageSummaryResponse,
@@ -50,6 +55,7 @@ export type {
   CrossDocDealSummary,
   DailyStatEntry,
   DailyStatsResponse,
+  DealAnalyticsResponse,
   DealDetail,
   DealListResponse,
   DealNote,
@@ -109,6 +115,7 @@ export type {
   ApiHealth,
   Integration,
   IntegrationHealthResponse,
+  IntegrationTestResponse,
   QueueHealth,
   QuotaUsage,
   WebhookHealth,
@@ -184,6 +191,9 @@ export type {
   BVLStats,
   CallQueueLead,
   CallQueueResponse,
+  SAMEntity,
+  SAMEntityListResponse,
+  SAMStatsResponse,
 } from "./bvl";
 
 // SAM Profiles
@@ -205,3 +215,18 @@ export type {
   ReviewTransactionCorrection,
   TransactionReviewItem,
 } from "./reviews";
+
+// Instant
+export type { InstantAnalysisResponse, InstantFileResult, InstantSummary, FeedbackResponse } from "./instant";
+
+// Triage
+export type { TriageResponse, DocumentClassification, QualityAssessment, ConcatenationSignal, TransactionSignals, IntegrityCheck, TriageRecommendation, TriagePageAnalysis } from "./triage";
+
+// CRM
+export type { CRMConfigResponse, TestConnectionResponse, FieldMappingResponse, SyncTriggerResponse, SyncLogEntry, SyncLogResponse } from "./crm";
+
+// Push
+export type { VapidKeyResponse, PushStatusResponse } from "./push";
+
+// OAuth
+export type { OAuthTokenResponse } from "./oauth";

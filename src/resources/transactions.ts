@@ -5,6 +5,7 @@
 
 import type { Banklyze, RequestOptions } from "../client.js";
 import type {
+  Transaction,
   TransactionListResponse,
   TransactionDetail,
   TransactionCorrectionListResponse,
@@ -50,8 +51,8 @@ export class TransactionsResource {
   listAllForDocument(
     documentId: number,
     filters?: Record<string, unknown>,
-  ): PageIterator {
-    return new PageIterator(
+  ): PageIterator<Transaction> {
+    return new PageIterator<Transaction>(
       this._client,
       `/v1/documents/${documentId}/transactions`,
       { params: filters },
@@ -81,8 +82,8 @@ export class TransactionsResource {
   listAllForDeal(
     dealId: number,
     filters?: Record<string, unknown>,
-  ): PageIterator {
-    return new PageIterator(
+  ): PageIterator<Transaction> {
+    return new PageIterator<Transaction>(
       this._client,
       `/v1/deals/${dealId}/transactions`,
       { params: filters },

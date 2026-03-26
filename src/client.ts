@@ -42,6 +42,7 @@ import { OAuthResource } from "./resources/oauth.js";
 import { BVLResource } from "./resources/bvl.js";
 import { SAMProfilesResource } from "./resources/sam-profiles.js";
 import { ReviewsResource } from "./resources/reviews.js";
+import { InstantResource } from "./resources/instant.js";
 
 export interface Logger {
   debug(...args: unknown[]): void;
@@ -111,6 +112,7 @@ export class Banklyze {
   bvl: BVLResource;
   samProfiles: SAMProfilesResource;
   reviews: ReviewsResource;
+  instant: InstantResource;
 
   constructor(options: BanklyzeOptions) {
     this._apiKey = options.apiKey;
@@ -147,6 +149,7 @@ export class Banklyze {
     this.bvl = new BVLResource(this);
     this.samProfiles = new SAMProfilesResource(this);
     this.reviews = new ReviewsResource(this);
+    this.instant = new InstantResource(this);
 
     // Sub-resources on deals
     this.deals.comments = new CommentsResource(this);

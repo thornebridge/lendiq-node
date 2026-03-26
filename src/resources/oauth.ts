@@ -3,6 +3,7 @@
  */
 
 import type { Banklyze, RequestOptions } from "../client.js";
+import type { OAuthTokenResponse } from "../types/oauth.js";
 
 export class OAuthResource {
   _client: Banklyze;
@@ -22,11 +23,11 @@ export class OAuthResource {
   async createToken(options: {
     client_id: string;
     client_secret: string;
-  }): Promise<Record<string, unknown>> {
+  }): Promise<OAuthTokenResponse> {
     const creds = Buffer.from(
       `${options.client_id}:${options.client_secret}`,
     ).toString("base64");
-    return this._request<Record<string, unknown>>("POST", "/v1/oauth/token", {
+    return this._request<OAuthTokenResponse>("POST", "/v1/oauth/token", {
       body: new URLSearchParams({ grant_type: "client_credentials" }),
       headers: { Authorization: `Basic ${creds}` },
     });

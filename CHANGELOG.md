@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-03-26
+
+### Added
+
+- **InstantResource** — new `client.instant` resource for free-tier PDF analysis (`analyze()`, `submitFeedback()`)
+- **Document triage** — `client.documents.triage()` for pre-processing classification, quality, and integrity checks
+- **Admin pipeline settings** — `client.admin.pipelineSettings()` and `updatePipelineSettings()`
+- **BVL SAM sub-endpoints** — `client.bvl.samCreateRun()`, `samListRuns()`, `samGetRun()`, `samCancelRun()`, `samEntities()`, `samStats()`
+- **Generic PageIterator** — `PageIterator<T>` now preserves type information (`listAll()` returns `PageIterator<DealSummary>`, etc.)
+- **New type modules** — `types/instant.ts`, `types/triage.ts`, `types/crm.ts`, `types/push.ts`, `types/oauth.ts`
+- **HealthResponse** — typed interface for `client.admin.health()`
+- **DealAnalyticsResponse** — typed interface for `client.deals.analytics()`
+- **IntegrationTestResponse** — typed interface for `client.integrations.test()`
+- **SAMEntity**, **SAMEntityListResponse**, **SAMStatsResponse** — typed interfaces for BVL SAM endpoints
+- **Comprehensive test suite** — 202 tests across 10 test files covering errors, retry, pagination, and all resources
+
+### Changed
+
+- **Admin resource** — `health()`, `usageDaily()`, `usageModels()` now return typed interfaces instead of `Record<string, unknown>`
+- **CRM resource** — all 8 methods now return typed interfaces instead of `Record<string, unknown>`
+- **Push resource** — all methods now return typed interfaces (`VapidKeyResponse`, `PushStatusResponse`)
+- **OAuth resource** — `createToken()` now returns `OAuthTokenResponse`
+
 ## [1.2.0] - 2026-03-21
 
 ### Added

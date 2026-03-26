@@ -109,3 +109,30 @@ export interface BVLStats {
   top_disqualification_reasons: Record<string, number>;
   [key: string]: unknown;
 }
+
+export interface SAMEntity {
+  id: number;
+  uei?: string | null;
+  legal_business_name?: string | null;
+  dba_name?: string | null;
+  cage_code?: string | null;
+  entity_status?: string | null;
+  physical_address_city?: string | null;
+  physical_address_state?: string | null;
+  naics_codes?: string[];
+  created_at?: string | null;
+  [key: string]: unknown;
+}
+
+export interface SAMEntityListResponse {
+  data: SAMEntity[];
+  meta: { page: number; per_page: number; total: number; total_pages: number };
+  [key: string]: unknown;
+}
+
+export interface SAMStatsResponse {
+  total_entities: number;
+  total_runs: number;
+  by_status: Record<string, number>;
+  [key: string]: unknown;
+}

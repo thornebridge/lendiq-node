@@ -3,18 +3,26 @@
  *
  * Fetches pages lazily as the consumer iterates, using `page` / `per_page`
  * query parameters and the `meta.total_pages` field from the API response.
+ *
+ * Generic over `T` for typed iteration:
+ *
+ *   for await (const deal of client.deals.listAll()) {
+ *     deal.business_name; // typed as DealSummary
+ *   }
  */
 
 import type { Banklyze } from "./client.js";
 
-export class PageIterator implements AsyncIterable<Record<string, unknown>> {
+export class PageIterator<T = Record<string, unknown>>
+  implements AsyncIterable<T>
+{
   private _client: Banklyze;
   private _path: string;
   private _dataKey: string;
   private _params: Record<string, unknown>;
   private _perPage: number;
   private _page: number;
-  private _buffer: Record<string, unknown>[];
+  private _buffer: T[];
   private _exhausted: boolean;
 
   constructor(
@@ -36,7 +44,7 @@ export class PageIterator implements AsyncIterable<Record<string, unknown>> {
     this._exhausted = false;
   }
 
-  async *[Symbol.asyncIterator](): AsyncGenerator<Record<string, unknown>> {
+  async *[Symbol.asyncIterator](): AsyncGenerator<T> {
     while (true) {
       if (this._buffer.length === 0) {
         if (this._exhausted) return;
@@ -61,9 +69,7 @@ export class PageIterator implements AsyncIterable<Record<string, unknown>> {
       },
     );
 
-    const items = response[this._dataKey] as
-      | Record<string, unknown>[]
-      | undefined;
+    const items = response[this._dataKey] as T[] | undefined;
     if (!items || items.length === 0) {
       this._exhausted = true;
       return;

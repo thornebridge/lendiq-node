@@ -308,3 +308,7 @@ export interface DailyStatsResponse {
   data: DailyStatEntry[];
   [key: string]: unknown;
 }
+
+export interface DealAnalyticsResponse {
+  [key: string]: unknown;
+}

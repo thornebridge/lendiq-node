@@ -205,6 +205,10 @@ The SDK exposes named timeout constants for common operation types:
 | CRM | `client.crm` | CRM config, sync, field mapping |
 | Push | `client.push` | Push notification subscriptions |
 | OAuth | `client.oauth` | Client credentials token exchange |
+| BVL | `client.bvl` | Business validation runs, call queue, SAM entities |
+| SAM Profiles | `client.samProfiles` | SAM.gov search profiles, watchers, triggers |
+| Reviews | `client.reviews` | Document review queue, approve/correct |
+| Instant | `client.instant` | Free-tier instant PDF analysis (no auth) |
 
 ## Idempotency
 

@@ -58,3 +58,9 @@ export interface Integration {
   has_credentials: boolean;
   [key: string]: unknown;
 }
+
+export interface IntegrationTestResponse {
+  success: boolean;
+  message?: string | null;
+  [key: string]: unknown;
+}

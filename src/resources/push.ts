@@ -3,6 +3,7 @@
  */
 
 import type { Banklyze, RequestOptions } from "../client.js";
+import type { VapidKeyResponse, PushStatusResponse } from "../types/push.js";
 
 export class PushResource {
   _client: Banklyze;
@@ -20,8 +21,8 @@ export class PushResource {
   }
 
   /** Get the VAPID public key for web push subscriptions. */
-  async vapidKey(): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  async vapidKey(): Promise<VapidKeyResponse> {
+    return this._request<VapidKeyResponse>(
       "GET",
       "/v1/push/vapid-key",
     );
@@ -30,8 +31,8 @@ export class PushResource {
   /** Register or update a push subscription for the authenticated user. */
   async subscribe(
     options: Record<string, unknown>,
-  ): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  ): Promise<PushStatusResponse> {
+    return this._request<PushStatusResponse>(
       "POST",
       "/v1/push/subscribe",
       { json: options },
@@ -41,8 +42,8 @@ export class PushResource {
   /** Remove a push subscription for the authenticated user. */
   async unsubscribe(
     options: Record<string, unknown>,
-  ): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  ): Promise<PushStatusResponse> {
+    return this._request<PushStatusResponse>(
       "DELETE",
       "/v1/push/subscribe",
       { json: options },

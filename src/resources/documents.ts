@@ -11,9 +11,11 @@ import type {
   BulkUploadResponse,
   DocumentListResponse,
   DocumentDetail,
+  DocumentSummary,
   DocumentStatusResponse,
   BatchDocumentStatusResponse,
 } from "../types/document.js";
+import type { TriageResponse } from "../types/triage.js";
 import { PageIterator } from "../pagination.js";
 
 async function toBlob(
@@ -139,8 +141,8 @@ export class DocumentsResource {
   listAll(
     dealId: number,
     filters?: Record<string, unknown>,
-  ): PageIterator {
-    return new PageIterator(this._client, `/v1/deals/${dealId}/documents`, {
+  ): PageIterator<DocumentSummary> {
+    return new PageIterator<DocumentSummary>(this._client, `/v1/deals/${dealId}/documents`, {
       params: filters,
     });
   }
@@ -216,6 +218,32 @@ export class DocumentsResource {
       {
         params: { document_type: documentType },
         headers: Object.keys(headers).length > 0 ? headers : undefined,
+      },
+    );
+  }
+
+  async triage(
+    file: string | Buffer | Blob,
+    options?: {
+      filename?: string;
+      visionFallback?: boolean;
+    },
+  ): Promise<TriageResponse> {
+    const { blob, filename } = await toBlob(file, options?.filename);
+
+    const form = new FormData();
+    form.append("file", blob, filename);
+
+    const params: Record<string, unknown> = {};
+    if (options?.visionFallback) params.vision_fallback = true;
+
+    return this._request<TriageResponse>(
+      "POST",
+      "/v1/documents/triage",
+      {
+        body: form,
+        params: Object.keys(params).length > 0 ? params : undefined,
+        timeout: Banklyze.TIMEOUT_UPLOAD,
       },
     );
   }

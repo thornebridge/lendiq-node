@@ -5,6 +5,9 @@
 import type { Banklyze, RequestOptions } from "../client.js";
 import type {
   ErrorLogListResponse,
+  HealthResponse,
+  UsageDailyResponse,
+  UsageModelsResponse,
   UsageSummaryResponse,
 } from "../types/admin.js";
 import type { DlqListResponse, DlqActionResponse } from "../types/dlq.js";
@@ -24,8 +27,8 @@ export class AdminResource {
     return this._client._request<T>(method, path, options);
   }
 
-  async health(): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>("GET", "/v1/admin/health");
+  async health(): Promise<HealthResponse> {
+    return this._request<HealthResponse>("GET", "/v1/admin/health");
   }
 
   async errors(options?: {
@@ -50,8 +53,8 @@ export class AdminResource {
 
   async usageDaily(options?: {
     days?: number;
-  }): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  }): Promise<UsageDailyResponse> {
+    return this._request<UsageDailyResponse>(
       "GET",
       "/v1/admin/usage/daily",
       { params: options as Record<string, unknown> },
@@ -60,8 +63,8 @@ export class AdminResource {
 
   async usageModels(options?: {
     days?: number;
-  }): Promise<Record<string, unknown>> {
-    return this._request<Record<string, unknown>>(
+  }): Promise<UsageModelsResponse> {
+    return this._request<UsageModelsResponse>(
       "GET",
       "/v1/admin/usage/models",
       { params: options as Record<string, unknown> },
@@ -109,6 +112,25 @@ export class AdminResource {
     return this._request<DlqActionResponse>(
       "POST",
       `/v1/admin/dlq/${entryId}/discard`,
+    );
+  }
+
+  // ── Pipeline Settings ───────────────────────────────────────────────
+
+  async pipelineSettings(): Promise<Record<string, unknown>> {
+    return this._request<Record<string, unknown>>(
+      "GET",
+      "/v1/admin/pipeline-settings",
+    );
+  }
+
+  async updatePipelineSettings(
+    options: Record<string, unknown>,
+  ): Promise<Record<string, unknown>> {
+    return this._request<Record<string, unknown>>(
+      "PUT",
+      "/v1/admin/pipeline-settings",
+      { json: options },
     );
   }
 }
