@@ -2,9 +2,9 @@
 <br />
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://banklyze.com/logo-white.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://banklyze.com/logo-dark.svg">
-  <img alt="Banklyze" src="https://banklyze.com/logo-dark.svg" width="220">
+  <source media="(prefers-color-scheme: dark)" srcset="https://banklyze.com/icons/banklyze-mark-white.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://banklyze.com/icons/Banklyze-Logo.svg">
+  <img alt="Banklyze" src="https://banklyze.com/icons/Banklyze-Logo.svg" width="220">
 </picture>
 
 <br />
@@ -29,7 +29,7 @@ Turn months of manual underwriting into a single API call.
 
 <br />
 
-[Get API Key](https://app.banklyze.com) &nbsp;&middot;&nbsp; [Documentation](https://docs.banklyze.com) &nbsp;&middot;&nbsp; [API Reference](https://docs.banklyze.com/api) &nbsp;&middot;&nbsp; [Discord](https://discord.gg/banklyze)
+[Get API Key](https://banklyze.com) &nbsp;&middot;&nbsp; [Documentation](https://docs.banklyze.com) &nbsp;&middot;&nbsp; [API Reference](https://docs.banklyze.com/api) &nbsp;&middot;&nbsp; [Discord](https://discord.gg/banklyze)
 
 <br />
 </div>
@@ -329,7 +329,7 @@ MIT &mdash; use it however you want.
 
 <div align="center">
 
-**[Get your API key](https://app.banklyze.com)** and start analyzing statements in minutes.
+**[Get your API key](https://banklyze.com)** and start analyzing statements in minutes.
 
 <br />
 
