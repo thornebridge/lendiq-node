@@ -5,11 +5,11 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { Banklyze } from "../src/index.js";
+import { LendIQ } from "../src/index.js";
 
-describe("Banklyze client", () => {
+describe("LendIQ client", () => {
   it("test_client_init", () => {
-    const client = new Banklyze({ apiKey: "bk_test_xxx" });
+    const client = new LendIQ({ apiKey: "liq_test_xxx" });
 
     expect(client.lastRequestId).toBeNull();
     expect(client.deals).toBeDefined();
@@ -19,11 +19,11 @@ describe("Banklyze client", () => {
   });
 
   it("test_client_resources_complete", () => {
-    const client = new Banklyze({ apiKey: "bk_test_xxx" });
+    const client = new LendIQ({ apiKey: "liq_test_xxx" });
 
     const topLevel = [
       "admin",
-      "bvl",
+      "lvl",
       "crm",
       "deals",
       "documents",
@@ -55,7 +55,7 @@ describe("Banklyze client", () => {
   });
 
   it("test_client_sub_resources", () => {
-    const client = new Banklyze({ apiKey: "bk_test_xxx" });
+    const client = new LendIQ({ apiKey: "liq_test_xxx" });
 
     expect(client.deals.comments).toBeDefined();
     expect(client.deals.assignments).toBeDefined();
@@ -67,14 +67,14 @@ describe("Banklyze client", () => {
   });
 
   it("test_client_timeout_constants", () => {
-    expect(Banklyze.TIMEOUT_READ).toBe(10_000);
-    expect(Banklyze.TIMEOUT_WRITE).toBe(30_000);
-    expect(Banklyze.TIMEOUT_UPLOAD).toBe(120_000);
-    expect(Banklyze.TIMEOUT_REPORT).toBe(300_000);
+    expect(LendIQ.TIMEOUT_READ).toBe(10_000);
+    expect(LendIQ.TIMEOUT_WRITE).toBe(30_000);
+    expect(LendIQ.TIMEOUT_UPLOAD).toBe(120_000);
+    expect(LendIQ.TIMEOUT_REPORT).toBe(300_000);
   });
 
   it("test_client_close", () => {
-    const client = new Banklyze({ apiKey: "bk_test_xxx" });
+    const client = new LendIQ({ apiKey: "liq_test_xxx" });
 
     // close() should not throw
     expect(() => client.close()).not.toThrow();

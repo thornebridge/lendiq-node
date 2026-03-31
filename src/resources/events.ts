@@ -2,14 +2,14 @@
  * Events resource — SSE streaming for real-time deal processing updates.
  */
 
-import type { Banklyze } from "../client.js";
-import { BanklyzeError } from "../errors.js";
+import type { LendIQ } from "../client.js";
+import { LendIQError } from "../errors.js";
 import { SSEEvent } from "../types/event.js";
 
 export class EventsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -41,7 +41,7 @@ export class EventsResource {
 
     const response = await fetch(url, { method: "GET", headers });
     if (!response.ok || !response.body) {
-      throw new BanklyzeError(
+      throw new LendIQError(
         `SSE connection failed: ${response.status}`,
         { statusCode: response.status },
       );
@@ -110,7 +110,7 @@ export class EventsResource {
 
     const response = await fetch(url, { method: "GET", headers });
     if (!response.ok || !response.body) {
-      throw new BanklyzeError(
+      throw new LendIQError(
         `SSE connection failed: ${response.status}`,
         { statusCode: response.status },
       );
@@ -182,7 +182,7 @@ export class EventsResource {
 
     const response = await fetch(url, { method: "GET", headers });
     if (!response.ok || !response.body) {
-      throw new BanklyzeError(
+      throw new LendIQError(
         `SSE connection failed: ${response.status}`,
         { statusCode: response.status },
       );

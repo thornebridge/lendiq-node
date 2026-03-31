@@ -11,12 +11,12 @@
  *   }
  */
 
-import type { Banklyze } from "./client.js";
+import type { LendIQ } from "./client.js";
 
 export class PageIterator<T = Record<string, unknown>>
   implements AsyncIterable<T>
 {
-  private _client: Banklyze;
+  private _client: LendIQ;
   private _path: string;
   private _dataKey: string;
   private _params: Record<string, unknown>;
@@ -26,7 +26,7 @@ export class PageIterator<T = Record<string, unknown>>
   private _exhausted: boolean;
 
   constructor(
-    client: Banklyze,
+    client: LendIQ,
     path: string,
     options?: {
       dataKey?: string;

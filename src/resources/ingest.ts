@@ -4,7 +4,7 @@
 
 import { openAsBlob } from "node:fs";
 import { basename } from "node:path";
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 import type {
   IngestResponse,
   BatchStatusResponse,
@@ -31,9 +31,9 @@ async function toBlob(
 }
 
 export class IngestResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -58,6 +58,7 @@ export class IngestResource {
     metadata: Record<string, unknown>;
     documentType?: string;
     idempotencyKey?: string;
+    geminiModel?: string;
   }): Promise<IngestResponse> {
     const form = new FormData();
 
@@ -78,12 +79,15 @@ export class IngestResource {
     if (options.idempotencyKey) {
       headers["Idempotency-Key"] = options.idempotencyKey;
     }
+    if (options.geminiModel) {
+      headers["X-Gemini-Model"] = options.geminiModel;
+    }
 
     return this._request<IngestResponse>("POST", "/v1/ingest", {
       body: form,
       params: Object.keys(params).length > 0 ? params : undefined,
       headers: Object.keys(headers).length > 0 ? headers : undefined,
-      timeout: Banklyze.TIMEOUT_UPLOAD,
+      timeout: LendIQ.TIMEOUT_UPLOAD,
     });
   }
 

@@ -2,7 +2,7 @@
  * Notifications resource — list, mark read, and manage notification preferences.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type {
   NotificationListResponse,
@@ -12,9 +12,9 @@ import type {
 } from "../types/notification.js";
 
 export class NotificationsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

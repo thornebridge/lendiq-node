@@ -1,5 +1,5 @@
 /**
- * Banklyze SDK response types.
+ * LendIQ SDK response types.
  *
  * All interfaces include `[key: string]: unknown` for forward compatibility.
  * New API fields will be accepted without breaking existing SDK consumers.
@@ -92,10 +92,15 @@ export type {
   DocumentListResponse,
   DocumentStatusResponse,
   DocumentSummary,
+  DocumentType,
   DocumentUploadResponse,
+  DriverLicenseAnalysis,
   ExtractionConfidenceDetail,
+  ExtractionMethod,
   FieldConfidence,
   PrescreenSummary,
+  ProcessingStatus,
+  VoidedCheckAnalysis,
 } from "./document";
 
 // Event
@@ -181,20 +186,20 @@ export type {
   WebhookTestResult,
 } from "./webhook";
 
-// BVL
+// LVL
 export type {
-  BVLHardGate,
-  BVLResult,
-  BVLRun,
-  BVLRunListResponse,
-  BVLSignal,
-  BVLStats,
+  LVLHardGate,
+  LVLResult,
+  LVLRun,
+  LVLRunListResponse,
+  LVLSignal,
+  LVLStats,
   CallQueueLead,
   CallQueueResponse,
   SAMEntity,
   SAMEntityListResponse,
   SAMStatsResponse,
-} from "./bvl";
+} from "./lvl";
 
 // SAM Profiles
 export type {

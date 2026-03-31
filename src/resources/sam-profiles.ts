@@ -2,7 +2,7 @@
  * SAM Profiles resource — search profile CRUD, watchers, runs, exports.
  */
 
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type {
   SAMFetchRun,
@@ -13,9 +13,9 @@ import type {
 } from "../types/sam-profiles.js";
 
 export class SAMProfilesResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

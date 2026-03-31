@@ -1,11 +1,11 @@
 /**
- * Error classes for the Banklyze TypeScript SDK.
+ * Error classes for the LendIQ TypeScript SDK.
  *
- * All errors extend `BanklyzeError` which carries the HTTP status code,
+ * All errors extend `LendIQError` which carries the HTTP status code,
  * parsed response body, and request ID when available.
  */
 
-export class BanklyzeError extends Error {
+export class LendIQError extends Error {
   statusCode: number | null;
   body: Record<string, unknown>;
   requestId: string | null;
@@ -19,14 +19,14 @@ export class BanklyzeError extends Error {
     },
   ) {
     super(message);
-    this.name = "BanklyzeError";
+    this.name = "LendIQError";
     this.statusCode = options?.statusCode ?? null;
     this.body = options?.body ?? {};
     this.requestId = options?.requestId ?? null;
   }
 }
 
-export class AuthenticationError extends BanklyzeError {
+export class AuthenticationError extends LendIQError {
   constructor(
     message: string,
     options?: {
@@ -40,7 +40,7 @@ export class AuthenticationError extends BanklyzeError {
   }
 }
 
-export class NotFoundError extends BanklyzeError {
+export class NotFoundError extends LendIQError {
   constructor(
     message: string,
     options?: {
@@ -54,7 +54,7 @@ export class NotFoundError extends BanklyzeError {
   }
 }
 
-export class ValidationError extends BanklyzeError {
+export class ValidationError extends LendIQError {
   constructor(
     message: string,
     options?: {
@@ -68,7 +68,7 @@ export class ValidationError extends BanklyzeError {
   }
 }
 
-export class RateLimitError extends BanklyzeError {
+export class RateLimitError extends LendIQError {
   retryAfter: number;
 
   constructor(
@@ -86,7 +86,7 @@ export class RateLimitError extends BanklyzeError {
   }
 }
 
-export class InvalidSignatureError extends BanklyzeError {
+export class InvalidSignatureError extends LendIQError {
   constructor(
     message: string,
     options?: {

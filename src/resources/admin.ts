@@ -2,7 +2,7 @@
  * Admin resource — health, errors, usage analytics, and constraint management.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type {
   ErrorLogListResponse,
   HealthResponse,
@@ -13,9 +13,9 @@ import type {
 import type { DlqListResponse, DlqActionResponse } from "../types/dlq.js";
 
 export class AdminResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

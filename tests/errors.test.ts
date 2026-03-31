@@ -3,10 +3,10 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Banklyze } from "../src/client.js";
+import { LendIQ } from "../src/client.js";
 import {
   AuthenticationError,
-  BanklyzeError,
+  LendIQError,
   NotFoundError,
   ValidationError,
   RateLimitError,
@@ -25,8 +25,8 @@ describe("Error handling", () => {
     vi.restoreAllMocks();
   });
 
-  function makeClient(): Banklyze {
-    return new Banklyze({ apiKey: "bk_test_xxx", maxRetries: 0 });
+  function makeClient(): LendIQ {
+    return new LendIQ({ apiKey: "liq_test_xxx", maxRetries: 0 });
   }
 
   it("401 -> AuthenticationError with statusCode, body, requestId", async () => {
@@ -105,7 +105,7 @@ describe("Error handling", () => {
     }
   });
 
-  it("500 -> BanklyzeError (generic)", async () => {
+  it("500 -> LendIQError (generic)", async () => {
     const body = { error: "Internal server error" };
     fetchMock.mockResolvedValue(jsonResponse(500, body));
     const client = makeClient();
@@ -114,8 +114,8 @@ describe("Error handling", () => {
       await client.deals.list();
       expect.unreachable("Should have thrown");
     } catch (err) {
-      expect(err).toBeInstanceOf(BanklyzeError);
-      const e = err as BanklyzeError;
+      expect(err).toBeInstanceOf(LendIQError);
+      const e = err as LendIQError;
       expect(e.statusCode).toBe(500);
       expect(e.message).toBe("Internal server error");
     }
@@ -130,7 +130,7 @@ describe("Error handling", () => {
       await client.deals.list();
       expect.unreachable("Should have thrown");
     } catch (err) {
-      const e = err as BanklyzeError;
+      const e = err as LendIQError;
       expect(e.body).toEqual(body);
       expect(e.body.code).toBe("FORBIDDEN");
     }
@@ -145,7 +145,7 @@ describe("Error handling", () => {
       await client.deals.list();
       expect.unreachable("Should have thrown");
     } catch (err) {
-      const e = err as BanklyzeError;
+      const e = err as LendIQError;
       expect(e.message).toBe("Custom error message");
     }
   });
@@ -159,7 +159,7 @@ describe("Error handling", () => {
       await client.deals.list();
       expect.unreachable("Should have thrown");
     } catch (err) {
-      const e = err as BanklyzeError;
+      const e = err as LendIQError;
       expect(e.message).toBe("Detailed error explanation");
     }
   });
@@ -173,7 +173,7 @@ describe("Error handling", () => {
       await client.deals.list();
       expect.unreachable("Should have thrown");
     } catch (err) {
-      const e = err as BanklyzeError;
+      const e = err as LendIQError;
       expect(e.message).toBe("HTTP 503");
     }
   });
@@ -193,8 +193,8 @@ describe("Error handling", () => {
       await client.deals.list();
       expect.unreachable("Should have thrown");
     } catch (err) {
-      expect(err).toBeInstanceOf(BanklyzeError);
-      const e = err as BanklyzeError;
+      expect(err).toBeInstanceOf(LendIQError);
+      const e = err as LendIQError;
       expect(e.statusCode).toBe(502);
       // When JSON parse fails, message falls back to "HTTP {status}"
       expect(e.message).toBe("HTTP 502");
@@ -203,22 +203,22 @@ describe("Error handling", () => {
   });
 
   it("error classes have correct name property", () => {
-    expect(new BanklyzeError("test").name).toBe("BanklyzeError");
+    expect(new LendIQError("test").name).toBe("LendIQError");
     expect(new AuthenticationError("test").name).toBe("AuthenticationError");
     expect(new NotFoundError("test").name).toBe("NotFoundError");
     expect(new ValidationError("test").name).toBe("ValidationError");
     expect(new RateLimitError("test").name).toBe("RateLimitError");
   });
 
-  it("all error types extend BanklyzeError", () => {
-    expect(new AuthenticationError("test")).toBeInstanceOf(BanklyzeError);
-    expect(new NotFoundError("test")).toBeInstanceOf(BanklyzeError);
-    expect(new ValidationError("test")).toBeInstanceOf(BanklyzeError);
-    expect(new RateLimitError("test")).toBeInstanceOf(BanklyzeError);
+  it("all error types extend LendIQError", () => {
+    expect(new AuthenticationError("test")).toBeInstanceOf(LendIQError);
+    expect(new NotFoundError("test")).toBeInstanceOf(LendIQError);
+    expect(new ValidationError("test")).toBeInstanceOf(LendIQError);
+    expect(new RateLimitError("test")).toBeInstanceOf(LendIQError);
   });
 
   it("all error types extend Error", () => {
-    expect(new BanklyzeError("test")).toBeInstanceOf(Error);
+    expect(new LendIQError("test")).toBeInstanceOf(Error);
     expect(new AuthenticationError("test")).toBeInstanceOf(Error);
     expect(new NotFoundError("test")).toBeInstanceOf(Error);
     expect(new ValidationError("test")).toBeInstanceOf(Error);
@@ -226,7 +226,7 @@ describe("Error handling", () => {
   });
 
   it("error defaults when constructed without options", () => {
-    const e = new BanklyzeError("bare error");
+    const e = new LendIQError("bare error");
     expect(e.statusCode).toBeNull();
     expect(e.body).toEqual({});
     expect(e.requestId).toBeNull();

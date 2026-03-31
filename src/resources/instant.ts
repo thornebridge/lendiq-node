@@ -4,13 +4,13 @@
 
 import { openAsBlob } from "node:fs";
 import { basename } from "node:path";
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 import type { InstantAnalysisResponse, FeedbackResponse } from "../types/instant.js";
 
 export class InstantResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -55,7 +55,7 @@ export class InstantResource {
       {
         body: form,
         params: Object.keys(params).length > 0 ? params : undefined,
-        timeout: Banklyze.TIMEOUT_UPLOAD,
+        timeout: LendIQ.TIMEOUT_UPLOAD,
       },
     );
   }

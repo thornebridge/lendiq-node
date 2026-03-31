@@ -2,7 +2,7 @@
  * Server-Sent Event types.
  */
 
-/** A server-sent event from the Banklyze API. */
+/** A server-sent event from the LendIQ API. */
 export class SSEEvent {
   id: string | null;
   event: string;

@@ -4,6 +4,69 @@
 
 import type { HealthFactor, PaginationMeta, ValidationDiscrepancy } from "./common";
 
+// ── Union types ────────────────────────────────────────────────────────────
+
+/** Classification type for uploaded documents. */
+export type DocumentType =
+  | "bank_statement"
+  | "tax_return"
+  | "profit_and_loss"
+  | "drivers_license"
+  | "voided_check"
+  | "other";
+
+/** Pipeline processing status for a document. */
+export type ProcessingStatus =
+  | "uploaded"
+  | "classifying"
+  | "extracting"
+  | "computing_metrics"
+  | "screening"
+  | "scoring"
+  | "completed"
+  | "failed"
+  | "cancelled";
+
+/** Method used to extract data from the document. */
+export type ExtractionMethod =
+  | "gemini_native_pdf"
+  | "pdfplumber"
+  | string; // legacy methods
+
+// ── Analysis interfaces ────────────────────────────────────────────────────
+
+/** Extracted data from a driver's license document. */
+export interface DriverLicenseAnalysis {
+  full_name: string | null;
+  date_of_birth: string | null;
+  license_number_last4: string | null;
+  address_street: string | null;
+  address_city: string | null;
+  address_state: string | null;
+  address_zip: string | null;
+  expiration_date: string | null;
+  state_of_issuance: string | null;
+  photo_readable: boolean | null;
+  extraction_confidence: number | null;
+  notes: string | null;
+  [key: string]: unknown;
+}
+
+/** Extracted data from a voided check document. */
+export interface VoidedCheckAnalysis {
+  bank_name: string | null;
+  routing_number: string | null;
+  account_number_last4: string | null;
+  account_holder_name: string | null;
+  check_number: string | null;
+  bank_address: string | null;
+  is_voided: boolean | null;
+  micr_readable: boolean | null;
+  extraction_confidence: number | null;
+  notes: string | null;
+  [key: string]: unknown;
+}
+
 /** Pre-screen results from regex extraction (no LLM). */
 export interface PrescreenSummary {
   bank_name: string | null;
@@ -133,9 +196,21 @@ export interface DocumentDetail {
   pdf_url: string | null;
   tax_return_analysis: Record<string, unknown> | null;
   pnl_analysis: Record<string, unknown> | null;
+  driver_license_analysis: DriverLicenseAnalysis | null;
+  voided_check_analysis: VoidedCheckAnalysis | null;
+  /**
+   * @deprecated Use driver_license_analysis / voided_check_analysis and
+   * type-specific analysis fields instead. Will be removed in a future version.
+   */
   prescreen: PrescreenSummary | null;
   integrity: DocumentIntegrity | null;
+  /**
+   * @deprecated Confidence is now embedded in type-specific analysis results.
+   * Will be removed in a future version.
+   */
   extraction_confidence_detail: ExtractionConfidenceDetail | null;
+  /** Gemini model used for extraction, if overridden. */
+  gemini_model_override?: string;
   [key: string]: unknown;
 }
 

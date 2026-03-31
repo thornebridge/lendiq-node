@@ -1,7 +1,7 @@
 {
-  "name": "@banklyze/sdk",
-  "version": "1.3.1",
-  "description": "Official TypeScript SDK for the Banklyze API — AI-powered MCA underwriting platform",
+  "name": "@lendworks/lendiq",
+  "version": "1.4.0",
+  "description": "Official TypeScript SDK for the LendIQ API — AI-powered MCA underwriting platform",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -35,16 +35,16 @@
     "LICENSE",
     "CHANGELOG.md"
   ],
-  "homepage": "https://docs.banklyze.com/sdk/typescript",
+  "homepage": "https://docs.iq.lend.works/sdk/typescript",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thornebridge/banklyze-node"
+    "url": "https://github.com/thornebridge/lendiq-node"
   },
   "bugs": {
-    "url": "https://github.com/thornebridge/banklyze-node/issues"
+    "url": "https://github.com/thornebridge/lendiq-node/issues"
   },
   "keywords": [
-    "banklyze",
+    "lendiq",
     "mca",
     "underwriting",
     "bank-statement",

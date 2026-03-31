@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Banklyze } from "../src/client.js";
+import { LendIQ } from "../src/client.js";
 import { PageIterator } from "../src/pagination.js";
 import { jsonResponse, SAMPLE_DEAL } from "./helpers.js";
 
@@ -19,8 +19,8 @@ describe("PageIterator", () => {
     vi.restoreAllMocks();
   });
 
-  function makeClient(): Banklyze {
-    return new Banklyze({ apiKey: "bk_test_xxx", maxRetries: 0 });
+  function makeClient(): LendIQ {
+    return new LendIQ({ apiKey: "liq_test_xxx", maxRetries: 0 });
   }
 
   it("single page — yields all items from one page", async () => {

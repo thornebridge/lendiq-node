@@ -1,24 +1,24 @@
 /**
- * Banklyze TypeScript SDK
+ * LendIQ TypeScript SDK
  *
- * Official client for the Banklyze API — AI-powered MCA underwriting platform.
+ * Official client for the LendIQ API — AI-powered MCA underwriting platform.
  *
  * @example
  * ```typescript
- * import { Banklyze } from "banklyze";
+ * import { LendIQ } from "lendiq";
  *
- * const client = new Banklyze({ apiKey: "bk_live_..." });
+ * const client = new LendIQ({ apiKey: "liq_live_..." });
  * const deals = await client.deals.list({ status: "ready" });
  * ```
  */
 
 // Client
-export { Banklyze } from "./client.js";
-export type { BanklyzeOptions, Logger, RequestOptions } from "./client.js";
+export { LendIQ } from "./client.js";
+export type { LendIQOptions, Logger, RequestOptions } from "./client.js";
 
 // Errors
 export {
-  BanklyzeError,
+  LendIQError,
   AuthenticationError,
   NotFoundError,
   ValidationError,

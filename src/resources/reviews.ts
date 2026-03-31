@@ -2,7 +2,7 @@
  * Reviews resource — human-in-the-loop statement review, approve, correct.
  */
 
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 import type {
   ReviewActionResponse,
   ReviewCorrectionRequest,
@@ -11,9 +11,9 @@ import type {
 } from "../types/reviews.js";
 
 export class ReviewsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

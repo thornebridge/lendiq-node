@@ -5,7 +5,7 @@
 
 import { openAsBlob } from "node:fs";
 import { basename } from "node:path";
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 import type {
   DocumentUploadResponse,
   BulkUploadResponse,
@@ -40,9 +40,9 @@ async function toBlob(
 }
 
 export class DocumentsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -63,6 +63,7 @@ export class DocumentsResource {
       filename?: string;
       documentType?: string;
       idempotencyKey?: string;
+      geminiModel?: string;
     },
   ): Promise<DocumentUploadResponse> {
     const { blob, filename } = await toBlob(file, options?.filename);
@@ -77,6 +78,9 @@ export class DocumentsResource {
     if (options?.idempotencyKey) {
       headers["Idempotency-Key"] = options.idempotencyKey;
     }
+    if (options?.geminiModel) {
+      headers["X-Gemini-Model"] = options.geminiModel;
+    }
 
     return this._request<DocumentUploadResponse>(
       "POST",
@@ -85,7 +89,7 @@ export class DocumentsResource {
         body: form,
         params: Object.keys(params).length > 0 ? params : undefined,
         headers: Object.keys(headers).length > 0 ? headers : undefined,
-        timeout: Banklyze.TIMEOUT_UPLOAD,
+        timeout: LendIQ.TIMEOUT_UPLOAD,
       },
     );
   }
@@ -96,6 +100,7 @@ export class DocumentsResource {
     options?: {
       documentType?: string;
       idempotencyKey?: string;
+      geminiModel?: string;
     },
   ): Promise<BulkUploadResponse> {
     const form = new FormData();
@@ -112,6 +117,9 @@ export class DocumentsResource {
     if (options?.idempotencyKey) {
       headers["Idempotency-Key"] = options.idempotencyKey;
     }
+    if (options?.geminiModel) {
+      headers["X-Gemini-Model"] = options.geminiModel;
+    }
 
     return this._request<BulkUploadResponse>(
       "POST",
@@ -120,7 +128,7 @@ export class DocumentsResource {
         body: form,
         params: Object.keys(params).length > 0 ? params : undefined,
         headers: Object.keys(headers).length > 0 ? headers : undefined,
-        timeout: Banklyze.TIMEOUT_UPLOAD,
+        timeout: LendIQ.TIMEOUT_UPLOAD,
       },
     );
   }
@@ -164,11 +172,14 @@ export class DocumentsResource {
 
   async reprocess(
     documentId: number,
-    options?: { idempotencyKey?: string },
+    options?: { idempotencyKey?: string; geminiModel?: string },
   ): Promise<DocumentStatusResponse> {
     const headers: Record<string, string> = {};
     if (options?.idempotencyKey) {
       headers["Idempotency-Key"] = options.idempotencyKey;
+    }
+    if (options?.geminiModel) {
+      headers["X-Gemini-Model"] = options.geminiModel;
     }
 
     return this._request<DocumentStatusResponse>(
@@ -243,7 +254,7 @@ export class DocumentsResource {
       {
         body: form,
         params: Object.keys(params).length > 0 ? params : undefined,
-        timeout: Banklyze.TIMEOUT_UPLOAD,
+        timeout: LendIQ.TIMEOUT_UPLOAD,
       },
     );
   }

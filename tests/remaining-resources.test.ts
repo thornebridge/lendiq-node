@@ -1,12 +1,12 @@
 /**
  * Test all remaining resources: rulesets, webhooks config, keys, team, shares,
- * notifications, ingest, CRM, integrations, push, oauth, onboarding, BVL,
+ * notifications, ingest, CRM, integrations, push, oauth, onboarding, LVL,
  * SAM profiles, reviews, instant, transactions, exports, collaboration,
  * and usage.
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Banklyze } from "../src/client.js";
+import { LendIQ } from "../src/client.js";
 import {
   jsonResponse,
   SAMPLE_RULESET,
@@ -16,12 +16,12 @@ import {
 
 describe("Remaining resources", () => {
   let fetchMock: ReturnType<typeof vi.fn>;
-  let client: Banklyze;
+  let client: LendIQ;
 
   beforeEach(() => {
     fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
-    client = new Banklyze({ apiKey: "bk_test_xxx", maxRetries: 0 });
+    client = new LendIQ({ apiKey: "liq_test_xxx", maxRetries: 0 });
   });
 
   afterEach(() => {
@@ -155,7 +155,7 @@ describe("Remaining resources", () => {
 
   describe("KeysResource", () => {
     it("create() — POST /v1/keys", async () => {
-      const createResult = { id: 1, key: "bk_live_new_key", name: "My Key" };
+      const createResult = { id: 1, key: "liq_live_new_key", name: "My Key" };
       fetchMock.mockResolvedValue(jsonResponse(200, createResult));
       const result = await client.keys.create({ name: "My Key" });
       expect(result).toEqual(createResult);
@@ -163,7 +163,7 @@ describe("Remaining resources", () => {
     });
 
     it("list() — GET /v1/keys", async () => {
-      const keysList = { data: [{ id: 1, name: "My Key", prefix: "bk_live" }] };
+      const keysList = { data: [{ id: 1, name: "My Key", prefix: "liq_live" }] };
       fetchMock.mockResolvedValue(jsonResponse(200, keysList));
       const result = await client.keys.list();
       expect(result).toEqual(keysList);
@@ -368,7 +368,7 @@ describe("Remaining resources", () => {
     });
 
     it("getFieldMapping() — GET /v1/crm/field-mapping/{provider}", async () => {
-      const mapping = { mappings: [{ crm_field: "name", banklyze_field: "business_name" }] };
+      const mapping = { mappings: [{ crm_field: "name", lendiq_field: "business_name" }] };
       fetchMock.mockResolvedValue(jsonResponse(200, mapping));
       const result = await client.crm.getFieldMapping("hubspot");
       expect(result).toEqual(mapping);
@@ -525,90 +525,90 @@ describe("Remaining resources", () => {
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // BVL
+  // LVL
   // ═══════════════════════════════════════════════════════════════════════════
 
-  describe("BVLResource", () => {
-    it("createRun() — POST /v1/bvl/runs", async () => {
+  describe("LVLResource", () => {
+    it("createRun() — POST /v1/lvl/runs", async () => {
       const run = { id: 1, status: "running" };
       fetchMock.mockResolvedValue(jsonResponse(200, run));
-      const result = await client.bvl.createRun();
+      const result = await client.lvl.createRun();
       expect(result).toEqual(run);
       expect(fetchMock.mock.calls[0][1].method).toBe("POST");
     });
 
-    it("listRuns() — GET /v1/bvl/runs", async () => {
+    it("listRuns() — GET /v1/lvl/runs", async () => {
       const runs = { data: [{ id: 1, status: "completed" }], meta: { page: 1, per_page: 25, total: 1, total_pages: 1 } };
       fetchMock.mockResolvedValue(jsonResponse(200, runs));
-      const result = await client.bvl.listRuns({ page: 1 });
+      const result = await client.lvl.listRuns({ page: 1 });
       expect(result).toEqual(runs);
     });
 
-    it("getRun() — GET /v1/bvl/runs/{id}", async () => {
+    it("getRun() — GET /v1/lvl/runs/{id}", async () => {
       const run = { id: 1, status: "completed" };
       fetchMock.mockResolvedValue(jsonResponse(200, run));
-      await client.bvl.getRun(1);
-      expect(fetchMock.mock.calls[0][0]).toContain("/v1/bvl/runs/1");
+      await client.lvl.getRun(1);
+      expect(fetchMock.mock.calls[0][0]).toContain("/v1/lvl/runs/1");
     });
 
-    it("cancelRun() — POST /v1/bvl/runs/{id}/cancel", async () => {
+    it("cancelRun() — POST /v1/lvl/runs/{id}/cancel", async () => {
       const run = { id: 1, status: "cancelled" };
       fetchMock.mockResolvedValue(jsonResponse(200, run));
-      await client.bvl.cancelRun(1);
-      expect(fetchMock.mock.calls[0][0]).toContain("/v1/bvl/runs/1/cancel");
+      await client.lvl.cancelRun(1);
+      expect(fetchMock.mock.calls[0][0]).toContain("/v1/lvl/runs/1/cancel");
       expect(fetchMock.mock.calls[0][1].method).toBe("POST");
     });
 
-    it("callQueue() — GET /v1/bvl/call-queue", async () => {
+    it("callQueue() — GET /v1/lvl/call-queue", async () => {
       const queue = { data: [], meta: { page: 1, per_page: 25, total: 0, total_pages: 0 } };
       fetchMock.mockResolvedValue(jsonResponse(200, queue));
-      const result = await client.bvl.callQueue({ tier: "A" });
+      const result = await client.lvl.callQueue({ tier: "A" });
       expect(result).toEqual(queue);
       expect(fetchMock.mock.calls[0][0]).toContain("tier=A");
     });
 
-    it("stats() — GET /v1/bvl/stats", async () => {
+    it("stats() — GET /v1/lvl/stats", async () => {
       const stats = { total_businesses: 500, verified: 350 };
       fetchMock.mockResolvedValue(jsonResponse(200, stats));
-      const result = await client.bvl.stats();
+      const result = await client.lvl.stats();
       expect(result).toEqual(stats);
     });
 
-    it("getResult() — GET /v1/bvl/{dealId}", async () => {
-      const bvlResult = { deal_id: 1, verified: true, checks: [] };
-      fetchMock.mockResolvedValue(jsonResponse(200, bvlResult));
-      await client.bvl.getResult(1);
-      expect(fetchMock.mock.calls[0][0]).toContain("/v1/bvl/1");
+    it("getResult() — GET /v1/lvl/{dealId}", async () => {
+      const lvlResult = { deal_id: 1, verified: true, checks: [] };
+      fetchMock.mockResolvedValue(jsonResponse(200, lvlResult));
+      await client.lvl.getResult(1);
+      expect(fetchMock.mock.calls[0][0]).toContain("/v1/lvl/1");
     });
 
-    it("validate() — POST /v1/bvl/{dealId}/validate", async () => {
-      const bvlResult = { deal_id: 1, verified: true, checks: [] };
-      fetchMock.mockResolvedValue(jsonResponse(200, bvlResult));
-      await client.bvl.validate(1, { force: true });
-      expect(fetchMock.mock.calls[0][0]).toContain("/v1/bvl/1/validate");
+    it("validate() — POST /v1/lvl/{dealId}/validate", async () => {
+      const lvlResult = { deal_id: 1, verified: true, checks: [] };
+      fetchMock.mockResolvedValue(jsonResponse(200, lvlResult));
+      await client.lvl.validate(1, { force: true });
+      expect(fetchMock.mock.calls[0][0]).toContain("/v1/lvl/1/validate");
       expect(fetchMock.mock.calls[0][1].method).toBe("POST");
     });
 
-    it("samCreateRun() — POST /v1/bvl/sam/runs", async () => {
+    it("samCreateRun() — POST /v1/lvl/sam/runs", async () => {
       const run = { id: 1, status: "running" };
       fetchMock.mockResolvedValue(jsonResponse(200, run));
-      await client.bvl.samCreateRun();
-      expect(fetchMock.mock.calls[0][0]).toContain("/v1/bvl/sam/runs");
+      await client.lvl.samCreateRun();
+      expect(fetchMock.mock.calls[0][0]).toContain("/v1/lvl/sam/runs");
       expect(fetchMock.mock.calls[0][1].method).toBe("POST");
     });
 
-    it("samEntities() — GET /v1/bvl/sam/entities", async () => {
+    it("samEntities() — GET /v1/lvl/sam/entities", async () => {
       const entities = { data: [], meta: { page: 1, per_page: 25, total: 0, total_pages: 0 } };
       fetchMock.mockResolvedValue(jsonResponse(200, entities));
-      const result = await client.bvl.samEntities();
+      const result = await client.lvl.samEntities();
       expect(result).toEqual(entities);
     });
 
-    it("samStats() — GET /v1/bvl/sam/stats", async () => {
+    it("samStats() — GET /v1/lvl/sam/stats", async () => {
       const stats = { total_entities: 100, active: 80 };
       fetchMock.mockResolvedValue(jsonResponse(200, stats));
-      await client.bvl.samStats();
-      expect(fetchMock.mock.calls[0][0]).toContain("/v1/bvl/sam/stats");
+      await client.lvl.samStats();
+      expect(fetchMock.mock.calls[0][0]).toContain("/v1/lvl/sam/stats");
     });
   });
 

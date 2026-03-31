@@ -3,7 +3,7 @@
  * for transactions on documents and deals.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type {
   Transaction,
   TransactionListResponse,
@@ -14,9 +14,9 @@ import type { ActionResponse } from "../types/common.js";
 import { PageIterator } from "../pagination.js";
 
 export class TransactionsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

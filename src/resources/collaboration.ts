@@ -5,7 +5,7 @@
  * These are mounted as sub-resources on `client.deals.*`.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type {
   AssignedDealsResponse,
@@ -22,9 +22,9 @@ import type {
 // ── Comments ─────────────────────────────────────────────────────────────────
 
 export class CommentsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -75,9 +75,9 @@ export class CommentsResource {
 // ── Assignments ──────────────────────────────────────────────────────────────
 
 export class AssignmentsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -129,9 +129,9 @@ export class AssignmentsResource {
 // ── Document Requests ────────────────────────────────────────────────────────
 
 export class DocRequestsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -182,9 +182,9 @@ export class DocRequestsResource {
 // ── Activity Timeline ────────────────────────────────────────────────────────
 
 export class TimelineResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -221,9 +221,9 @@ export class TimelineResource {
 // ── User Search ──────────────────────────────────────────────────────────────
 
 export class UserSearchResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

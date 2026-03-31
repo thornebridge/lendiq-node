@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Banklyze } from "../src/client.js";
+import { LendIQ } from "../src/client.js";
 import {
   jsonResponse,
   SAMPLE_DEAL,
@@ -20,12 +20,12 @@ import {
 
 describe("DealsResource", () => {
   let fetchMock: ReturnType<typeof vi.fn>;
-  let client: Banklyze;
+  let client: LendIQ;
 
   beforeEach(() => {
     fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
-    client = new Banklyze({ apiKey: "bk_test_xxx", maxRetries: 0 });
+    client = new LendIQ({ apiKey: "liq_test_xxx", maxRetries: 0 });
   });
 
   afterEach(() => {
@@ -63,7 +63,7 @@ describe("DealsResource", () => {
     await client.deals.list();
 
     const headers = fetchMock.mock.calls[0][1].headers as Record<string, string>;
-    expect(headers["X-API-Key"]).toBe("bk_test_xxx");
+    expect(headers["X-API-Key"]).toBe("liq_test_xxx");
   });
 
   // ── create() ──────────────────────────────────────────────────────────────

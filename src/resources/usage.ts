@@ -2,16 +2,16 @@
  * Usage resource — usage summary and processing time statistics.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type {
   UsageSummary,
   ProcessingTimeStats,
 } from "../types/usage.js";
 
 export class UsageResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

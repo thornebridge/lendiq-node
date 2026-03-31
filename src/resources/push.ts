@@ -2,13 +2,13 @@
  * Push notifications resource — VAPID key, subscribe, unsubscribe.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { VapidKeyResponse, PushStatusResponse } from "../types/push.js";
 
 export class PushResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

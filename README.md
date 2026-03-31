@@ -2,24 +2,24 @@
 <br />
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://banklyze.com/icons/banklyze-mark-white.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://banklyze.com/icons/Banklyze-Logo.svg">
-  <img alt="Banklyze" src="https://banklyze.com/icons/Banklyze-Logo.svg" width="48">
+  <source media="(prefers-color-scheme: dark)" srcset="https://iq.lend.works/icons/lendiq-mark-white.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://iq.lend.works/icons/LendIQ-Logo.svg">
+  <img alt="LendIQ" src="https://iq.lend.works/icons/LendIQ-Logo.svg" width="48">
 </picture>
 <br />
-<samp><b>B A N K L Y Z E</b></samp>
+<samp><b>L E N D I Q</b></samp>
 
 <br />
 <br />
 
 ### Upload a bank statement. Get an underwriting decision.
 
-The official TypeScript SDK for the Banklyze API.<br />
+The official TypeScript SDK for the LendIQ API.<br />
 Turn months of manual underwriting into a single API call.
 
 <br />
 
-[![npm](https://img.shields.io/npm/v/@banklyze/sdk?style=flat-square&color=0a0a0a&labelColor=0a0a0a)](https://www.npmjs.com/package/@banklyze/sdk)
+[![npm](https://img.shields.io/npm/v/@lendworks/lendiq?style=flat-square&color=0a0a0a&labelColor=0a0a0a)](https://www.npmjs.com/package/@lendworks/lendiq)
 &nbsp;
 [![MIT](https://img.shields.io/badge/license-MIT-0a0a0a?style=flat-square&labelColor=0a0a0a)](LICENSE)
 &nbsp;
@@ -31,7 +31,7 @@ Turn months of manual underwriting into a single API call.
 
 <br />
 
-[Get API Key](https://banklyze.com) &nbsp;&middot;&nbsp; [Documentation](https://docs.banklyze.com) &nbsp;&middot;&nbsp; [API Reference](https://docs.banklyze.com/api)
+[Get API Key](https://iq.lend.works) &nbsp;&middot;&nbsp; [Documentation](https://docs.lend.works) &nbsp;&middot;&nbsp; [API Reference](https://docs.lend.works/api)
 
 <br />
 </div>
@@ -43,9 +43,9 @@ Turn months of manual underwriting into a single API call.
 ## 7 lines. That's it.
 
 ```typescript
-import { Banklyze } from "@banklyze/sdk";
+import { LendIQ } from "@lendworks/lendiq";
 
-const client = new Banklyze({ apiKey: "bk_live_..." });
+const client = new LendIQ({ apiKey: "liq_live_..." });
 
 const deal = await client.deals.create({ business_name: "Acme Trucking LLC" });
 await client.documents.upload(deal.id, "./statements/chase_jan.pdf");
@@ -54,17 +54,17 @@ const result = await client.deals.get(deal.id);
 console.log(result.recommendation.decision); // "approved"
 ```
 
-That PDF just went through OCR extraction, LLM parsing, transaction screening, tamper detection, 12-factor health scoring, and a full underwriting recommendation. Your team didn't write a single rule.
+That PDF just went through Gemini-powered extraction, transaction screening, tamper detection, 12-factor health scoring, and a full underwriting recommendation. Your team didn't write a single rule.
 
 <br />
 
-## Why teams switch to Banklyze
+## Why teams switch to LendIQ
 
 <table>
 <tr>
 <td width="50%">
 
-### Before Banklyze
+### Before LendIQ
 - Manual PDF review (20-40 min per deal)
 - Spreadsheet-based scoring
 - Inconsistent underwriting criteria
@@ -74,7 +74,7 @@ That PDF just went through OCR extraction, LLM parsing, transaction screening, t
 </td>
 <td width="50%">
 
-### After Banklyze
+### After LendIQ
 - Automated analysis (seconds per deal)
 - 12-factor composite health scoring
 - Configurable rulesets with version history
@@ -87,13 +87,13 @@ That PDF just went through OCR extraction, LLM parsing, transaction screening, t
 
 <br />
 
-## Banklyze vs. the alternatives
+## LendIQ vs. the alternatives
 
-| | **Banklyze** | Ocrolus | LendAPI | Plaid (Asset Reports) | DIY (in-house) |
+| | **LendIQ** | Ocrolus | LendAPI | Plaid (Asset Reports) | DIY (in-house) |
 |---|:---:|:---:|:---:|:---:|:---:|
 | Upload PDF &rarr; full underwriting decision | **Yes** | No | Partial | No | Build it yourself |
 | Bank statement + tax return + P&L support | **All three** | Statements only | Statements only | No PDFs | Depends on scope |
-| LLM-powered extraction | **Yes** | Template OCR | Template OCR | N/A | Build it yourself |
+| Gemini native PDF extraction | **Yes** | Template OCR | Template OCR | N/A | Build it yourself |
 | Tamper / fraud detection | **Built in** | Add-on | No | No | Build it yourself |
 | Health scoring (12 sub-factors) | **Built in** | No | Basic | No | Build it yourself |
 | Underwriting recommendation engine | **Built in** | No | Basic | No | Build it yourself |
@@ -110,7 +110,7 @@ We don't just extract data from bank statements. We **understand** them — and 
 ## Install
 
 ```bash
-npm install @banklyze/sdk
+npm install @lendworks/lendiq
 ```
 
 > Requires Node.js 20+. Zero runtime dependencies — uses native `fetch`, `crypto`, and `fs`.
@@ -145,35 +145,39 @@ All response types are forward-compatible. New API fields are accepted automatic
 
 ## Document intelligence, built in
 
-Upload a PDF and get back structured intelligence — no OCR pipeline to build, no LLM prompts to tune.
+Upload a PDF and get back structured intelligence — no OCR pipeline, no prompt engineering, no infra to manage.
 
 ```typescript
 const doc = await client.documents.get(docId);
 
-// Pre-screen (regex-based, instant, no LLM cost)
-doc.prescreen.bank_name;          // "Chase"
-doc.prescreen.opening_balance;    // 15420.00
-doc.prescreen.viable;             // true
-doc.prescreen.confidence;         // 0.95
+// Extraction metadata
+doc.extraction_method;       // "gemini_native_pdf"
+doc.extraction_confidence;   // 0.94
+doc.document_type;           // "bank_statement"
 
 // Tamper detection
 doc.integrity.tampering_risk_level;  // "clean" | "low" | "medium" | "high"
-doc.integrity.tampering_flags;       // string[]
 
-// Extraction confidence scoring
-doc.extraction_confidence_detail.overall_confidence;  // 0.94
-doc.extraction_confidence_detail.overall_tier;        // "HIGH"
+// Financial analysis (bank statements)
+doc.analysis.average_daily_balance;   // 16215.30
+doc.analysis.total_deposits;          // 48920.00
+doc.analysis.health_score;            // 78.5
+doc.analysis.health_grade;            // "B"
 
-// Cross-document validation
-doc.analysis.validation_is_reliable;       // true
-doc.analysis.validation_discrepancies;     // ValidationDiscrepancy[]
+// Identity verification (driver's licenses)
+doc.driver_license_analysis?.full_name;         // "John Smith"
+doc.driver_license_analysis?.expiration_date;   // "2028-06-15"
+
+// Bank verification (voided checks)
+doc.voided_check_analysis?.routing_number;       // "021000021"
+doc.voided_check_analysis?.is_voided;            // true
 ```
 
 <br />
 
 ## Instant analysis — no account required
 
-Let prospects try Banklyze before they sign up. The instant endpoint processes a PDF in under 2 seconds with no data persistence.
+Let prospects try LendIQ before they sign up. The instant endpoint processes a PDF in under 2 seconds with no data persistence.
 
 ```typescript
 const result = await client.instant.analyze("./statement.pdf");
@@ -198,7 +202,7 @@ Watch documents process in real time. No polling.
 for await (const event of client.events.stream(dealId)) {
   switch (event.event) {
     case "stage":
-      console.log(`Stage: ${event.data}`);  // "extracting_text" → "parsing" → "screening" → "scoring"
+      console.log(`Stage: ${event.data}`);  // "classifying" → "extracting" → "screening" → "scoring"
       break;
     case "complete":
       console.log("Analysis complete");
@@ -227,7 +231,7 @@ for await (const deal of client.deals.listAll({ status: "ready" })) {
 Every error is a typed class with the context you need to debug. No parsing strings.
 
 ```typescript
-import { NotFoundError, RateLimitError, ValidationError } from "@banklyze/sdk";
+import { NotFoundError, RateLimitError, ValidationError } from "@lendworks/lendiq";
 
 try {
   await client.deals.get(dealId);
@@ -248,7 +252,7 @@ try {
 ## Webhook verification in one line
 
 ```typescript
-import { verifySignature } from "@banklyze/sdk/webhooks";
+import { verifySignature } from "@lendworks/lendiq/webhooks";
 
 // HMAC-SHA256 with constant-time comparison. Timing attacks don't apply.
 verifySignature(requestBody, headers["x-webhook-signature"], "whsec_...");
@@ -272,9 +276,9 @@ verifySignature(requestBody, headers["x-webhook-signature"], "whsec_...");
 ## Configuration
 
 ```typescript
-const client = new Banklyze({
-  apiKey: "bk_live_...",          // required
-  baseUrl: "https://api.banklyze.com",  // default
+const client = new LendIQ({
+  apiKey: "liq_live_...",          // required
+  baseUrl: "https://iq.lend.works",  // default
   timeout: 30_000,                // default (ms)
   maxRetries: 2,                  // default
   logger: console,                // optional debug logging
@@ -285,7 +289,7 @@ const client = new Banklyze({
 
 ## 25 resources. Full API coverage.
 
-Every endpoint in the Banklyze API has a typed method in this SDK.
+Every endpoint in the LendIQ API has a typed method in this SDK.
 
 | | Resource | What it does |
 |-|----------|-------------|
@@ -295,7 +299,7 @@ Every endpoint in the Banklyze API has a typed method in this SDK.
 | | `client.exports` | Deal and document CSV/PDF exports |
 | | `client.rulesets` | Underwriting criteria CRUD, versioned, set default |
 | **Intelligence** | `client.instant` | Free-tier instant PDF analysis (sub-2s, no persistence) |
-| | `client.bvl` | Business validation runs, call queue, SAM entities |
+| | `client.lvl` | Business validation runs, call queue, SAM entities |
 | | `client.samProfiles` | SAM.gov search profiles, watchers, automated triggers |
 | | `client.reviews` | Document review queue, approve/correct workflow |
 | **Real-time** | `client.events` | SSE streams for deals, org events, batch progress |
@@ -337,9 +341,9 @@ Exponential backoff with jitter. 500 ms base, 30 s cap. Honors `Retry-After`.
 
 ## We ship fast
 
-This SDK is actively maintained by the Banklyze engineering team. We release weekly, respond to issues within 24 hours, and treat SDK quality with the same rigor as our core platform.
+This SDK is actively maintained by the LendIQ engineering team. We release weekly, respond to issues within 24 hours, and treat SDK quality with the same rigor as our core platform.
 
-If something isn't right, [open an issue](https://github.com/thornebridge/banklyze-node/issues). We'll fix it.
+If something isn't right, [open an issue](https://github.com/thornebridge/lendiq-node/issues). We'll fix it.
 
 <br />
 
@@ -351,10 +355,10 @@ MIT &mdash; use it however you want.
 
 <div align="center">
 
-**[Get your API key](https://banklyze.com)** and start analyzing statements in minutes.
+**[Get your API key](https://iq.lend.works)** and start analyzing statements in minutes.
 
 <br />
 
-Built with care by the [Banklyze](https://banklyze.com) team.
+Built with care by the [LendIQ](https://iq.lend.works) team.
 
 </div>

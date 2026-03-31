@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Banklyze } from "../src/client.js";
-import { BanklyzeError, RateLimitError } from "../src/errors.js";
+import { LendIQ } from "../src/client.js";
+import { LendIQError, RateLimitError } from "../src/errors.js";
 import { jsonResponse, SAMPLE_DEAL_LIST, SAMPLE_ACTION } from "./helpers.js";
 
 describe("Retry logic", () => {
@@ -23,9 +23,9 @@ describe("Retry logic", () => {
    * Helper: create a client with retry enabled and _sleep mocked out
    * so tests run instantly.
    */
-  function makeClient(maxRetries = 2): Banklyze {
-    const client = new Banklyze({
-      apiKey: "bk_test_xxx",
+  function makeClient(maxRetries = 2): LendIQ {
+    const client = new LendIQ({
+      apiKey: "liq_test_xxx",
       maxRetries,
       retryBackoff: 10,
     });
@@ -65,7 +65,7 @@ describe("Retry logic", () => {
     const client = makeClient(2);
     await expect(
       client.deals.create({ business_name: "Acme" }),
-    ).rejects.toThrow(BanklyzeError);
+    ).rejects.toThrow(LendIQError);
 
     // POST is mutating — should NOT be retried on 500
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -139,11 +139,11 @@ describe("Retry logic", () => {
     expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 
-  it("connection error exhausts retries and throws BanklyzeError", async () => {
+  it("connection error exhausts retries and throws LendIQError", async () => {
     fetchMock.mockRejectedValue(new TypeError("fetch failed"));
 
     const client = makeClient(2);
-    await expect(client.deals.list()).rejects.toThrow(BanklyzeError);
+    await expect(client.deals.list()).rejects.toThrow(LendIQError);
 
     // 1 initial + 2 retries = 3 total
     expect(fetchMock).toHaveBeenCalledTimes(3);
@@ -204,7 +204,7 @@ describe("Retry logic", () => {
     const client = makeClient(2);
     await expect(
       client.deals.update(1, { business_name: "New Name" }),
-    ).rejects.toThrow(BanklyzeError);
+    ).rejects.toThrow(LendIQError);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
@@ -239,10 +239,10 @@ describe("Retry logic", () => {
   it("maxRetries: 0 means no retries at all", async () => {
     fetchMock.mockResolvedValue(jsonResponse(500, { error: "server error" }));
 
-    const client = new Banklyze({ apiKey: "bk_test_xxx", maxRetries: 0 });
+    const client = new LendIQ({ apiKey: "liq_test_xxx", maxRetries: 0 });
     (client as any)._sleep = vi.fn().mockResolvedValue(undefined);
 
-    await expect(client.deals.list()).rejects.toThrow(BanklyzeError);
+    await expect(client.deals.list()).rejects.toThrow(LendIQError);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });

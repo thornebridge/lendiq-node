@@ -2,13 +2,13 @@
  * CRM resource — config, field mapping, sync, and test.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { CRMConfigResponse, TestConnectionResponse, FieldMappingResponse, SyncTriggerResponse, SyncLogResponse } from "../types/crm.js";
 
 export class CrmResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

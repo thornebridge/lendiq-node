@@ -2,14 +2,14 @@
  * Rulesets resource — CRUD + set-default for underwriting rulesets.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type { RulesetListResponse, Ruleset } from "../types/ruleset.js";
 
 export class RulesetsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

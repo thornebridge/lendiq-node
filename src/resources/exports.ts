@@ -2,12 +2,12 @@
  * Exports resource — download deal/document reports as CSV or PDF.
  */
 
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 
 export class ExportsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -31,7 +31,7 @@ export class ExportsResource {
     return this._request<ArrayBuffer>(
       "GET",
       `/v1/deals/${dealId}/export/pdf`,
-      { raw: true, timeout: Banklyze.TIMEOUT_REPORT },
+      { raw: true, timeout: LendIQ.TIMEOUT_REPORT },
     );
   }
 
@@ -47,7 +47,7 @@ export class ExportsResource {
     return this._request<ArrayBuffer>(
       "GET",
       `/v1/documents/${documentId}/pdf`,
-      { raw: true, timeout: Banklyze.TIMEOUT_REPORT },
+      { raw: true, timeout: LendIQ.TIMEOUT_REPORT },
     );
   }
 }

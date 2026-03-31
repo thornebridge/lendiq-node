@@ -2,14 +2,14 @@
  * Keys resource — create, list, and revoke API keys.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type { CreateKeyResponse, KeyListResponse } from "../types/key.js";
 
 export class KeysResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

@@ -2,16 +2,16 @@
  * Shares resource — create, list, and revoke deal share links.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type {
   ShareToken,
   ShareTokenListResponse,
 } from "../types/share.js";
 
 export class SharesResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

@@ -2,13 +2,13 @@
  * Onboarding resource — seed demo data for new organizations.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 
 export class OnboardingResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

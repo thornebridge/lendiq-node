@@ -2,13 +2,13 @@
  * OAuth resource — client credentials token endpoint.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { OAuthTokenResponse } from "../types/oauth.js";
 
 export class OAuthResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

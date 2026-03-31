@@ -2,7 +2,7 @@
  * Team resource — list, invite, update, and deactivate team members.
  */
 
-import type { Banklyze, RequestOptions } from "../client.js";
+import type { LendIQ, RequestOptions } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type {
   TeamListResponse,
@@ -11,9 +11,9 @@ import type {
 } from "../types/team.js";
 
 export class TeamResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 

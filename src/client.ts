@@ -1,5 +1,5 @@
 /**
- * Banklyze TypeScript SDK — main client.
+ * LendIQ TypeScript SDK — main client.
  *
  * Provides a Stripe-style resource-oriented API client with automatic
  * retry logic, exponential backoff, and typed responses.
@@ -7,7 +7,7 @@
 
 import { randomUUID } from "node:crypto";
 import {
-  BanklyzeError,
+  LendIQError,
   AuthenticationError,
   NotFoundError,
   ValidationError,
@@ -39,7 +39,7 @@ import { OnboardingResource } from "./resources/onboarding.js";
 import { CrmResource } from "./resources/crm.js";
 import { PushResource } from "./resources/push.js";
 import { OAuthResource } from "./resources/oauth.js";
-import { BVLResource } from "./resources/bvl.js";
+import { LVLResource } from "./resources/lvl.js";
 import { SAMProfilesResource } from "./resources/sam-profiles.js";
 import { ReviewsResource } from "./resources/reviews.js";
 import { InstantResource } from "./resources/instant.js";
@@ -48,7 +48,7 @@ export interface Logger {
   debug(...args: unknown[]): void;
 }
 
-export interface BanklyzeOptions {
+export interface LendIQOptions {
   apiKey: string;
   baseUrl?: string;
   timeout?: number;
@@ -56,6 +56,8 @@ export interface BanklyzeOptions {
   retryBackoff?: number;
   retryMaxBackoff?: number;
   logger?: Logger;
+  /** Default Gemini model override for document extraction (sent as X-Gemini-Model header). */
+  geminiModel?: string;
 }
 
 export interface RequestOptions {
@@ -67,7 +69,7 @@ export interface RequestOptions {
   timeout?: number;
 }
 
-export class Banklyze {
+export class LendIQ {
   /** Default timeout for read-only operations (ms). */
   static readonly TIMEOUT_READ = 10_000;
   /** Default timeout for write operations (ms). */
@@ -84,6 +86,7 @@ export class Banklyze {
   private readonly _retryBackoff: number;
   private readonly _retryMaxBackoff: number;
   private readonly _logger: Logger | null;
+  private readonly _geminiModel: string | null;
 
   /** The X-Request-ID from the most recent API response. */
   lastRequestId: string | null = null;
@@ -109,14 +112,14 @@ export class Banklyze {
   crm: CrmResource;
   push: PushResource;
   oauth: OAuthResource;
-  bvl: BVLResource;
+  lvl: LVLResource;
   samProfiles: SAMProfilesResource;
   reviews: ReviewsResource;
   instant: InstantResource;
 
-  constructor(options: BanklyzeOptions) {
+  constructor(options: LendIQOptions) {
     this._apiKey = options.apiKey;
-    this._baseUrl = (options.baseUrl ?? "https://api.banklyze.com").replace(
+    this._baseUrl = (options.baseUrl ?? "https://api.lendiq.com").replace(
       /\/$/,
       "",
     );
@@ -125,6 +128,7 @@ export class Banklyze {
     this._retryBackoff = options.retryBackoff ?? 500;
     this._retryMaxBackoff = options.retryMaxBackoff ?? 30_000;
     this._logger = options.logger ?? null;
+    this._geminiModel = options.geminiModel ?? null;
 
     // Initialize resources
     this.deals = new DealsResource(this);
@@ -146,7 +150,7 @@ export class Banklyze {
     this.crm = new CrmResource(this);
     this.push = new PushResource(this);
     this.oauth = new OAuthResource(this);
-    this.bvl = new BVLResource(this);
+    this.lvl = new LVLResource(this);
     this.samProfiles = new SAMProfilesResource(this);
     this.reviews = new ReviewsResource(this);
     this.instant = new InstantResource(this);
@@ -169,7 +173,11 @@ export class Banklyze {
 
   /** Build default authentication headers. */
   _buildHeaders(): Record<string, string> {
-    return { "X-API-Key": this._apiKey };
+    const headers: Record<string, string> = { "X-API-Key": this._apiKey };
+    if (this._geminiModel) {
+      headers["X-Gemini-Model"] = this._geminiModel;
+    }
+    return headers;
   }
 
   /** Build a full URL with query-string parameters. */
@@ -274,19 +282,19 @@ export class Banklyze {
         }
 
         await this._sleep(delay);
-        lastError = new BanklyzeError(`HTTP ${response.status}`, {
+        lastError = new LendIQError(`HTTP ${response.status}`, {
           statusCode: response.status,
           requestId: this.lastRequestId,
         });
       } catch (err) {
-        if (err instanceof BanklyzeError) throw err;
+        if (err instanceof LendIQError) throw err;
 
         // Network/timeout errors — always retryable
         this.lastRequestId = requestId;
         lastError = err as Error;
 
         if (attempt >= this._maxRetries) {
-          throw new BanklyzeError(
+          throw new LendIQError(
             `Connection error after ${attempt + 1} attempts: ${(err as Error).message}`,
             { requestId: this.lastRequestId },
           );
@@ -301,7 +309,7 @@ export class Banklyze {
       await this._raiseForStatus(lastResponse);
     }
     if (lastError) throw lastError;
-    throw new BanklyzeError("Unexpected error");
+    throw new LendIQError("Unexpected error");
   }
 
   private _shouldRetry(
@@ -353,7 +361,7 @@ export class Banklyze {
       throw new RateLimitError(message, { ...opts, retryAfter });
     }
 
-    throw new BanklyzeError(message, opts);
+    throw new LendIQError(message, opts);
   }
 
   private _sleep(ms: number): Promise<void> {

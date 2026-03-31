@@ -2,7 +2,7 @@
  * Webhook signature verification utilities.
  *
  * Use `verifySignature()` in your webhook handler to validate that incoming
- * payloads were signed by Banklyze. The function uses constant-time
+ * payloads were signed by LendIQ. The function uses constant-time
  * comparison to prevent timing attacks.
  */
 

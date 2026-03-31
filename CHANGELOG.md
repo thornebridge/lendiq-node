@@ -12,13 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **InstantResource** — new `client.instant` resource for free-tier PDF analysis (`analyze()`, `submitFeedback()`)
 - **Document triage** — `client.documents.triage()` for pre-processing classification, quality, and integrity checks
 - **Admin pipeline settings** — `client.admin.pipelineSettings()` and `updatePipelineSettings()`
-- **BVL SAM sub-endpoints** — `client.bvl.samCreateRun()`, `samListRuns()`, `samGetRun()`, `samCancelRun()`, `samEntities()`, `samStats()`
+- **LVL SAM sub-endpoints** — `client.lvl.samCreateRun()`, `samListRuns()`, `samGetRun()`, `samCancelRun()`, `samEntities()`, `samStats()`
 - **Generic PageIterator** — `PageIterator<T>` now preserves type information (`listAll()` returns `PageIterator<DealSummary>`, etc.)
 - **New type modules** — `types/instant.ts`, `types/triage.ts`, `types/crm.ts`, `types/push.ts`, `types/oauth.ts`
 - **HealthResponse** — typed interface for `client.admin.health()`
 - **DealAnalyticsResponse** — typed interface for `client.deals.analytics()`
 - **IntegrationTestResponse** — typed interface for `client.integrations.test()`
-- **SAMEntity**, **SAMEntityListResponse**, **SAMStatsResponse** — typed interfaces for BVL SAM endpoints
+- **SAMEntity**, **SAMEntityListResponse**, **SAMStatsResponse** — typed interfaces for LVL SAM endpoints
 - **Comprehensive test suite** — 202 tests across 10 test files covering errors, retry, pagination, and all resources
 
 ### Changed
@@ -62,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Typed responses** — all resource methods return fully typed interfaces with IDE autocompletion
-- **22 resource groups** covering the entire Banklyze API:
+- **22 resource groups** covering the entire LendIQ API:
   - Core: deals, documents, transactions, exports, events, webhooks, ingest, rulesets
   - Collaboration: comments, assignments, doc requests, timeline, user search
   - Platform: team, notifications, keys, shares, usage, search

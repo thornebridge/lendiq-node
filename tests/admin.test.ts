@@ -3,17 +3,17 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Banklyze } from "../src/client.js";
+import { LendIQ } from "../src/client.js";
 import { jsonResponse, SAMPLE_HEALTH } from "./helpers.js";
 
 describe("AdminResource", () => {
   let fetchMock: ReturnType<typeof vi.fn>;
-  let client: Banklyze;
+  let client: LendIQ;
 
   beforeEach(() => {
     fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
-    client = new Banklyze({ apiKey: "bk_test_xxx", maxRetries: 0 });
+    client = new LendIQ({ apiKey: "liq_test_xxx", maxRetries: 0 });
   });
 
   afterEach(() => {

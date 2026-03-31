@@ -2,7 +2,7 @@
  * Deals resource — CRUD, decision, notes, evaluate, recommendation, export.
  */
 
-import { type RequestOptions, Banklyze } from "../client.js";
+import { type RequestOptions, LendIQ } from "../client.js";
 import type { ActionResponse } from "../types/common.js";
 import type {
   DealListResponse,
@@ -34,7 +34,7 @@ function stripUndefined(
 }
 
 export class DealsResource {
-  _client: Banklyze;
+  _client: LendIQ;
 
   // Sub-resources (assigned by client constructor)
   comments!: CommentsResource;
@@ -43,7 +43,7 @@ export class DealsResource {
   timeline!: TimelineResource;
   users!: UserSearchResource;
 
-  constructor(client: Banklyze) {
+  constructor(client: LendIQ) {
     this._client = client;
   }
 
@@ -380,7 +380,7 @@ export class DealsResource {
       {
         body: form,
         headers: Object.keys(headers).length ? headers : undefined,
-        timeout: Banklyze.TIMEOUT_UPLOAD,
+        timeout: LendIQ.TIMEOUT_UPLOAD,
       },
     );
   }
